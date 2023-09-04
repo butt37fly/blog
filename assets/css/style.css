@@ -232,6 +232,7 @@ p {
 .Form {
   width: min(100%, 1000px);
   height: auto;
+  margin: auto;
 }
 
 .Form__wrapper {
@@ -410,6 +411,7 @@ p {
 .Content {
   width: 80%;
   height: auto;
+  min-height: 80vh;
   padding: var(--s-xs);
 }
 
