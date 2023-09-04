@@ -1,0 +1,11 @@
+php_flag display_startup_errors on
+php_flag display_errors on
+
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteRule ^account/$ src/controllers/account.controller.php
+RewriteRule ^account/([a-zA-Z-]+)/$ src/controllers/account.controller.php?a=$1
+
+RewriteRule ^([a-zA-Z]+)/$ index.php?page=$1
+RewriteRule ^category/([a-zA-Z-]+)/$ index.php?page=category&cat=$1

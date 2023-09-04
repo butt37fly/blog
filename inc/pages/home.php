@@ -1,0 +1,1 @@
+<?php include 'inc/templates/parts/feed.php' ?>
