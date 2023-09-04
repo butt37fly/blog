@@ -18,7 +18,7 @@
       <input class="Form__input Input" type="password" name="signInPasswordRep" id="signInPasswordRep" placeholder="yourpassword123!_" required>
     </section>
     <section class="Form__section">
-    <input class="Form__submit Button" type="submit" name="SignIn" placeholder="Crear cuenta">
+    <input class="Form__submit Button" type="submit" name="SignIn" value="Crear cuenta">
     </section>
   </div>
 </form>

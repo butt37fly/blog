@@ -10,7 +10,7 @@
       <input class="Form__input Input" type="password" name="loginPassword" id="loginPassword" placeholder="yourpassword123!_" required>
     </section>
     <section class="Form__section">
-      <input class="Form__submit Button" type="submit" name="Login" placeholder="Ingresar">
+      <input class="Form__submit Button" type="submit" name="Login" value="Ingresar">
     </section>
   </div>
 </form>
