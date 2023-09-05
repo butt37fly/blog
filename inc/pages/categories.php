@@ -1,4 +1,4 @@
-<form class="Form" method="POST" action="<?php echo SITE_URI ."category/" ?>">
+<form class="Form" method="POST" action="<?php echo SITE_URI ."c/category/" ?>">
   <div class="Form__wrapper">
     <h3 class="Form__title Text">Crear categoría</h3>
     <section class="Form__section">

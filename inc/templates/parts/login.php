@@ -1,4 +1,4 @@
-<form class="Form" method="POST" action="<?php echo SITE_URI ."account/" ?>">
+<form class="Form" method="POST" action="<?php echo SITE_URI ."c/account/" ?>">
   <div class="Form__wrapper">
     <h3 class="Form__title Text">Inicia sesión</h3>
     <section class="Form__section">

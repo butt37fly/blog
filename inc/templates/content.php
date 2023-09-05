@@ -2,6 +2,8 @@
 
   <?php
 
+  if ( ! isset( $_GET['page'] )) redirect_to();
+
   if ($_GET['page'] === "home") {
 
     include 'inc/pages/home.php';
@@ -14,17 +16,8 @@
       
       include 'inc/pages/categories.php';
 
-    } else {
-
-      redirect_to();
-
     }
-
   }
-
-
-
-
 
   ?>
 
