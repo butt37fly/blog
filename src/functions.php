@@ -8,8 +8,10 @@ function custom_session_start()
     session_start();
 }
 
-function redirect_to($url = SITE_URI . "home/" )
+function redirect_to($page = "home/" )
 {
+  $url = SITE_URI ."$page";
+  
   header("Location: $url");
   die();
 }
