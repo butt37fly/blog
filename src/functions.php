@@ -8,10 +8,10 @@ function custom_session_start()
     session_start();
 }
 
-function redirect_to($page = "home/" )
+function redirect_to($page = "home/")
 {
-  $url = SITE_URI ."$page";
-  
+  $url = SITE_URI . "$page";
+
   header("Location: $url");
   die();
 }
@@ -19,6 +19,7 @@ function redirect_to($page = "home/" )
 function server_says($code, $value = "")
 {
   $server_codes = array(
+    "e000" => "Algo ha salido mal, inténtalo de nuevo.",
     "e001" => "El campo <b>$value</b> está vacío.",
     "e002" => "Debe ingresar un email válido.",
     "e003" => "Las contraseñas no coinciden.",
@@ -28,7 +29,7 @@ function server_says($code, $value = "")
     "e007" => "El correo y la contraseña no coinciden."
   );
 
-  $msg = $server_codes[$code] ?? "";
+  $msg = $server_codes[$code] ?? $value;
 
   custom_session_start();
 
@@ -83,13 +84,19 @@ function validate_input($input, $type)
     return $is_lengthy && $is_password;
   }
 
+  if ($type == "slug") {
+    $is_slug = preg_match('/^([a-z(0-9)-]){3,}$/', $input);
+
+    return $is_slug;
+  }
+
 }
 
-function exist_term($input, $term)
+function exist_term($input, $term, $table)
 {
   global $pdo;
 
-  $query = "SELECT $term FROM users WHERE $term = :input";
+  $query = "SELECT $term FROM $table WHERE $term = :input";
   $sth = $pdo->prepare($query);
   $sth->bindValue(':input', $input);
   $sth->execute();
@@ -178,11 +185,75 @@ function get_entries($limit = null)
   ON u.id = e.user_id
   ORDER BY e.post_date DESC";
 
-  if( $limit != null && $limit > 0 ) $query .= " LIMIT $limit";
-  
-  $sth = $pdo->prepare( $query );
+  if ($limit != null && $limit > 0)
+    $query .= " LIMIT $limit";
+
+  $sth = $pdo->prepare($query);
   $sth->execute();
   $result = $sth->fetchAll();
 
   return $result;
+}
+
+function create_slug($term)
+{
+
+  $slug = trim($term);
+  $slug = remove_accents($slug);
+  $slug = strtolower($slug);
+  $slug = preg_replace('/([^a-z0-9-\s])+/', '', $slug);
+  $slug = preg_replace('/\s+/', '-', $slug);
+
+  return $slug;
+}
+
+function remove_accents($term)
+{
+  $term = str_replace(
+    array('á', 'à', 'ä', 'â', 'ª', 'Á', 'À', 'Â', 'Ä'),
+    array('a', 'a', 'a', 'a', 'a', 'A', 'A', 'A', 'A'),
+    $term
+  );
+
+  $term = str_replace(
+    array('é', 'è', 'ë', 'ê', 'É', 'È', 'Ê', 'Ë'),
+    array('e', 'e', 'e', 'e', 'E', 'E', 'E', 'E'),
+    $term
+  );
+
+  $term = str_replace(
+    array('í', 'ì', 'ï', 'î', 'Í', 'Ì', 'Ï', 'Î'),
+    array('i', 'i', 'i', 'i', 'I', 'I', 'I', 'I'),
+    $term
+  );
+
+  $term = str_replace(
+    array('ó', 'ò', 'ö', 'ô', 'Ó', 'Ò', 'Ö', 'Ô'),
+    array('o', 'o', 'o', 'o', 'O', 'O', 'O', 'O'),
+    $term
+  );
+
+  $term = str_replace(
+    array('ú', 'ù', 'ü', 'û', 'Ú', 'Ù', 'Û', 'Ü'),
+    array('u', 'u', 'u', 'u', 'U', 'U', 'U', 'U'),
+    $term
+  );
+
+  $term = str_replace(
+    array('ñ', 'Ñ', 'ç', 'Ç'),
+    array('n', 'N', 'c', 'C'),
+    $term
+  );
+
+  return $term;
+}
+
+function create_categories( $data ){
+  global $pdo;
+
+  $query = "INSERT INTO categories ( name, slug ) VALUES (:name, :slug)";
+  $sth = $pdo->prepare($query);
+  $sth->bindValue(':name', $data['name']);
+  $sth->bindValue(':slug', $data['slug']);
+  $sth->execute();
 }
