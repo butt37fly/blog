@@ -26,7 +26,7 @@ if ( isset( $_POST['CreateCategory'] ) ){
   }
 
   try {
-    create_categories( ['name' => $name, 'slug' => $slug] );
+    create_category( ['name' => $name, 'slug' => $slug] );
   } catch (\Throwable $th) {
     server_says( 'e000' );
   }
