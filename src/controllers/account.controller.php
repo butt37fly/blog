@@ -107,14 +107,13 @@ if (isset($_POST['SignIn'])) {
 
   # Verify the user exists in the db
 
-  if (exist_term($username, 'username'))
-    $errors[] = "e004";
+  if (exist_term($username, 'username', 'users')){
+    server_says( 'e004', 'nombre de usuario' );
+    redirect_to();
+  }
 
-  if (exist_term($email, 'email'))
-    $errors[] = "e004";
-
-  if (!empty($errors)) {
-    set_server_msg($errors);
+  if (exist_term($email, 'email', 'users')){
+    server_says( 'e004', 'email' );
     redirect_to();
   }
 
