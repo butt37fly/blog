@@ -102,6 +102,22 @@ p {
   --c-border: var(--c-purple);
 }
 
+.Select{
+  all: unset;
+  padding: var(--s-xs) var(--s-s);
+  border-radius: 10px;
+  background-color: var(--c-white);
+  cursor: pointer;
+  position: relative;
+}
+
+.Textarea{
+  all: unset;
+  padding: var(--s-xxs) var(--s-s);
+  border-radius: 10px;
+  background-color: var(--c-white);
+}
+
 /*** Links ***/
 
 .Link {

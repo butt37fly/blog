@@ -179,6 +179,19 @@ function create_category($data)
   $sth->execute();
 }
 
+function create_entry( $data ){
+  global $pdo;
+
+  $query = "INSERT INTO entries (category_id, user_id, title, content, post_date) VALUES (:category, :user, :title, :content, curdate())";
+  $sth = $pdo->prepare($query);
+  $sth->bindValue(':category', $data['category_id']);
+  $sth->bindValue(':user', $data['user_id']);
+  $sth->bindValue(':title', $data['title']);
+  $sth->bindValue(':content', $data['content']);
+  $sth->execute();
+  
+}
+
 ############# Set
 
 function login_user($data)
@@ -187,7 +200,7 @@ function login_user($data)
 
   $output = [];
 
-  $query = "SELECT username, email, password FROM users WHERE email = :email";
+  $query = "SELECT id, username, email, password FROM users WHERE email = :email";
   $sth = $pdo->prepare($query);
   $sth->bindValue(':email', $data['email']);
 
@@ -198,6 +211,7 @@ function login_user($data)
 
     if ($is_correct_password) {
       $output = [
+        'id' => $result->id,
         'username' => $result->username,
         'email' => $result->email
       ];

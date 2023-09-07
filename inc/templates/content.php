@@ -2,7 +2,7 @@
 
   <?php
 
-  $pages = ["home", "categories"];
+  $pages = ["home", "categories", "entries"];
 
   if (!isset($_GET['page']))
     redirect_to();
@@ -24,6 +24,19 @@
     if (is_user_logged()) {
 
       include 'inc/pages/categories.php';
+
+    } else {
+
+      redirect_to();
+
+    }
+  }
+
+  if ($_GET['page'] === "entries") {
+
+    if (is_user_logged()) {
+
+      include 'inc/pages/entries.php';
 
     } else {
 
