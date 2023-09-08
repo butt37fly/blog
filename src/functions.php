@@ -65,6 +65,13 @@ function is_user_logged()
   return isset($_SESSION['user']) && isset($_SESSION['user']['logged']);
 }
 
+function user_owns_post(){
+  global $entry; 
+  custom_session_start();
+
+  return $entry->owner === $_SESSION['user']['id'];
+}
+
 function remove_accents($term)
 {
   $term = str_replace(
@@ -142,7 +149,7 @@ function get_entries($limit = null, $category = null, $entry = null )
 {
   global $pdo;
 
-  $query = "SELECT c.name as 'category', c.slug as 'cat_slug', e.slug as 'entry_slug', u.username as 'author', e.title, e.content, e.post_date as 'date'
+  $query = "SELECT e.id as 'id', e.user_id as 'owner', c.name as 'category', c.slug as 'cat_slug', e.slug as 'entry_slug', u.username as 'author', e.title, e.content, e.post_date as 'date'
   FROM entries e
   INNER JOIN categories c
   ON c.id = e.category_id
@@ -294,6 +301,19 @@ function update_user($data)
     return false;
   }
 }
+
+############# Delete
+
+function delete_entry( $id )
+{
+  global $pdo;
+
+  $query = "DELETE FROM entries WHERE id = :param";
+  $sth = $pdo->prepare( $query );
+  $sth->bindParam( ':param', $id );
+  $sth->execute();
+}
+
 
 ############# Display 
 

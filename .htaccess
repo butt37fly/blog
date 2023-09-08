@@ -10,6 +10,7 @@ RewriteRule ^c/account/([a-zA-Z-]+)/$ src/controllers/account.controller.php?a=$
 RewriteRule ^c/category/$ src/controllers/categories.controller.php
 
 RewriteRule ^c/entry/$ src/controllers/entries.controller.php
+RewriteRule ^c/entry/([a-zA-Z-]+)/([0-9]+)/$ src/controllers/entries.controller.php?a=$1&id=$2
 
 RewriteRule ^([a-zA-Z]+)/$ index.php?page=$1
 RewriteRule ^category/([a-zA-Z-]+)/$ index.php?page=category&category=$1

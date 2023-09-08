@@ -5,6 +5,22 @@ require_once '../functions.php';
 
 custom_session_start();
 
+if (isset($_GET['a']) && $_GET['a'] === "delete") {
+
+  if ( isset($_GET['id']) ){
+
+    try {
+      delete_entry( $_GET['id'] );
+      server_says( 'custom', 'La entrada se ha eliminado exitosamente.' );
+    } catch (\Throwable $th) {
+      server_says( 'e000');
+    }
+
+    redirect_to();
+
+  }
+}
+
 if( isset( $_POST['CreateEntry'] )){
 
   $title = trim($_POST['EntryTitle']);

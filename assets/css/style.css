@@ -419,6 +419,17 @@ p {
   content: '|';
 }
 
+.Post__actions{
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--s-xs);
+  padding: var(--s-m) var(--s-s);
+}
+
+.Post__action{
+  margin: unset;
+}
+
 
 /*************************** PARTS ***************************/
 
@@ -494,6 +505,9 @@ p {
   align-items: center;
 }
 
+.Not-Found__title{
+  text-align: center;
+}
 
 /*** Sidebar ***/
 
