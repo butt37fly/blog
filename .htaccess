@@ -14,6 +14,8 @@ RewriteRule ^c/entry/([a-zA-Z-]+)/([0-9]+)/$ src/controllers/entries.controller.
 
 RewriteRule ^([a-zA-Z]+)/$ index.php?page=$1
 RewriteRule ^category/([a-zA-Z-]+)/$ index.php?page=category&category=$1
-RewriteRule ^entry/([a-zA-Z-]+)/$ index.php?page=entry&entry=$1
+RewriteRule ^entry/([a-zA-Z(0-9)-]+)/$ index.php?page=entry&entry=$1
 
 RewriteRule ^entries/([0-9]+)/$ index.php?page=entries&id=$1
+
+RewriteRule ^search/(([^&]*){2,24})/$ index.php?page=search&search=$1

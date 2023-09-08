@@ -125,6 +125,7 @@ if (isset($_POST['SignIn'])) {
       'email' => $email,
       "password" => $secure_password
     ]);
+    server_says('custom', 'La cuenta se ha creado exitosamente');
     redirect_to();
 
   } catch (\Throwable $e) {
@@ -172,7 +173,7 @@ if (isset($_POST['Update'])) {
   
   if (!empty($current_password)) {
 
-    if (!check_password($current_password, ['trigger' => 'id', 'value' => 1])) {
+    if (!check_password($current_password, ['trigger' => 'id', 'value' => $id])) {
       server_says('e007');
       redirect_to('account/');
     }

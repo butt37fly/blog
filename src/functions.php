@@ -185,6 +185,28 @@ function get_entries($limit = null, $category = null, $identifier = null )
   return $result;
 }
 
+function get_entries_by_search( $param )
+{
+  global $pdo;
+
+  $query = "SELECT e.id as 'id', e.user_id as 'owner', c.name as 'category', c.slug as 'cat_slug', e.slug as 'entry_slug', u.username as 'author', e.title, e.content, e.post_date as 'date'
+  FROM entries e
+  INNER JOIN categories c
+  ON c.id = e.category_id
+  INNER JOIN users u
+  ON u.id = e.user_id
+  WHERE u.username LIKE '%$param%'
+  OR c.name LIKE '%$param%'
+  OR e.title LIKE '%$param%'
+  OR e.content LIKE '%$param%'";
+
+  $sth = $pdo->prepare($query);
+  $sth->execute();
+  $result = $sth->fetchAll();
+
+  return $result;
+}
+
 ############# Create 
 
 function create_user($data)

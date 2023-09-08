@@ -11,6 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog</title>
   <link rel="stylesheet" href="<?php echo SITE_URI ."assets/css/style.css"?>">
+  <script type="text/javascript" src="<?php echo SITE_URI ."assets/js/main.js"?>" defer></script>
 </head>
 <body>
   <section class="Main">
@@ -22,8 +23,8 @@
 
         <?php include('parts/nav.php'); ?>
         
-        <form class="Searchbar">
-          <input class="Searchbar__input Input" type="text" name="Searchbar" id="Searchbar" placeholder="Busca tu juego favorito">
+        <form class="Searchbar" action="<?php echo SITE_URI ."search"?>">
+          <input class="Searchbar__input Input" type="text" name="search" id="Searchbar" placeholder="Busca tu juego favorito">
           <button class="Searchbar__button" type="submit"> X </button>
         </form>
       </section>

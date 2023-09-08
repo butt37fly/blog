@@ -2,7 +2,7 @@
 
   <?php
 
-  $pages = ["home", "category", "entry", "categories", "entries", "account"];
+  $pages = ["home", "category", "entry", "search", "categories", "entries", "account"];
 
   if (!isset($_GET['page']))
     redirect_to();
@@ -28,6 +28,12 @@
   if ($_GET['page'] === "entry") {
 
     include 'inc/pages/entry.php';
+
+  }
+
+  if ($_GET['page'] === "search") {
+
+    include 'inc/pages/search.php';
 
   }
 
