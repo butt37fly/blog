@@ -138,7 +138,7 @@ function get_categories()
   return $result;
 }
 
-function get_entries($limit = null)
+function get_entries($limit = null, $category = null)
 {
   global $pdo;
 
@@ -147,11 +147,17 @@ function get_entries($limit = null)
   INNER JOIN categories c
   ON c.id = e.category_id
   INNER JOIN users u
-  ON u.id = e.user_id
-  ORDER BY e.post_date DESC";
+  ON u.id = e.user_id";
+
+  if ($category != null && !empty($category))
+    $query .= " WHERE c.slug = '$category'";
+
+  $query .= " ORDER BY e.post_date DESC";
 
   if ($limit != null && $limit > 0)
     $query .= " LIMIT $limit";
+
+  var_dump($query);
 
   $sth = $pdo->prepare($query);
   $sth->execute();

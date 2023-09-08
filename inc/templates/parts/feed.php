@@ -1,8 +1,6 @@
 <section class="Feed">
-  
-  <?php
 
-  $entries = get_entries(3);
+  <?php
   foreach ($entries as $entry): ?>
 
     <article class="Entry">
@@ -20,7 +18,7 @@
           </p>
         </section>
         <section class="Entry__bottom">
-          <a class="Entry__link Link Link--dark" href="<?php echo SITE_URI ."category/$entry->slug/" ?>">
+          <a class="Entry__link Link Link--dark" href="<?php echo SITE_URI . "category/$entry->slug/" ?>">
             <h3 class="Entry__category Meta" rel="author">
               <?php echo $entry->category ?>
             </h3>
