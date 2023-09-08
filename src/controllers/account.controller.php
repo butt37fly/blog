@@ -8,7 +8,7 @@ if (isset($_GET['a']) && $_GET['a'] === "logout") {
   custom_session_start();
 
   if (isset($_SESSION['user'])) {
-    session_destroy();
+    unset( $_SESSION['user']);
   }
 }
 
@@ -107,13 +107,13 @@ if (isset($_POST['SignIn'])) {
 
   # Verify the user exists in the db
 
-  if (exist_term($username, 'username', 'users')){
-    server_says( 'e004', 'nombre de usuario' );
+  if (exist_term($username, 'username', 'users')) {
+    server_says('e004', 'nombre de usuario');
     redirect_to();
   }
 
-  if (exist_term($email, 'email', 'users')){
-    server_says( 'e004', 'email' );
+  if (exist_term($email, 'email', 'users')) {
+    server_says('e004', 'email');
     redirect_to();
   }
 
@@ -130,6 +130,84 @@ if (isset($_POST['SignIn'])) {
   } catch (\Throwable $e) {
     print_r($e);
   }
+}
+
+if (isset($_POST['Update'])) {
+  custom_session_start();
+
+  $id = $_SESSION['user']['id'];
+  $username = trim($_POST['UpdateUsername']);
+  $email = trim($_POST['UpdateEmail']);
+  $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+  $current_password = trim($_POST['UpdateCurrentPassword']);
+  $new_password = trim($_POST['UpdatePassword']);
+  $new_password_rep = trim($_POST['UpdatePasswordRep']);
+
+  $data = ['id' => $id, 'values' => []];
+
+  if ($username !== $_SESSION['user']['username']) {
+
+    if (exist_term($username, 'username', 'users')) {
+      server_says('e004', 'nombre de usuario');
+      redirect_to('account/');
+    }
+
+    if (!validate_input($username, 'username')) {
+      server_says('e005');
+      redirect_to('account/');
+    }
+
+    $data['values']['username'] = $username;
+  }
+
+  if ($email !== $_SESSION['user']['email']) {
+
+    if (exist_term($email, 'email', 'users')) {
+      server_says('e004', 'correo electrónico');
+      redirect_to('account/');
+    }
+
+    $data['values']['email'] = $email;
+  }
+  
+  if (!empty($current_password)) {
+
+    if (!check_password($current_password, ['trigger' => 'id', 'value' => 1])) {
+      server_says('e007');
+      redirect_to('account/');
+    }
+
+    if (!validate_input($new_password, 'password')) {
+      server_says('e006');
+      redirect_to('account/');
+    }
+
+    if ($new_password !== $new_password_rep) {
+      server_says('e003');
+      redirect_to('account/');
+    }
+
+    $secure_password = password_hash($new_password, PASSWORD_BCRYPT);
+
+    $data['values']['password'] = $secure_password;
+  }
+
+  if ( ! update_user( $data ) ){
+    server_says( 'e000' );
+    redirect_to( 'account/' );
+  }
+
+  if( key_exists('username', $data['values'] ) ){
+    $_SESSION['user']['username'] = $data['values']['username'];
+  }
+
+  if( key_exists('email', $data['values'] ) ){
+    $_SESSION['user']['email'] = $data['values']['email'];
+  }
+
+  server_says( 'custom', 'Los datos se han actualizado correctamente.' );
+  redirect_to( 'account/' );
+
 }
 
 redirect_to();

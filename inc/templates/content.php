@@ -2,7 +2,7 @@
 
   <?php
 
-  $pages = ["home", "categories", "entries"];
+  $pages = ["home", "categories", "entries", "account"];
 
   if (!isset($_GET['page']))
     redirect_to();
@@ -19,31 +19,27 @@
 
   }
 
-  if ($_GET['page'] === "categories") {
+  if ( is_user_logged() ){
 
-    if (is_user_logged()) {
+    if ($_GET['page'] === "categories") {
 
       include 'inc/pages/categories.php';
 
-    } else {
-
-      redirect_to();
-
     }
-  }
 
-  if ($_GET['page'] === "entries") {
-
-    if (is_user_logged()) {
+    if ($_GET['page'] === "entries") {
 
       include 'inc/pages/entries.php';
 
-    } else {
+    }
 
-      redirect_to();
+    if ($_GET['page'] === "account") {
+
+      include 'inc/pages/account.php';
 
     }
-  }
+
+  } 
 
   ?>
 

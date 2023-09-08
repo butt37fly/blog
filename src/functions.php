@@ -106,6 +106,24 @@ function remove_accents($term)
   return $term;
 }
 
+function check_password($password, $data)
+{
+  global $pdo;
+
+  $query = "SELECT password FROM users WHERE $data[trigger] = :param";
+  $sth = $pdo->prepare($query);
+  $sth->bindParam('param', $data['value']);
+  $sth->execute();
+
+  $result = $sth->fetch();
+  $hash = $result->password;
+
+  if (!$hash)
+    return false;
+
+  return password_verify($password, $hash);
+}
+
 ############# Get
 
 function get_categories()
@@ -179,7 +197,8 @@ function create_category($data)
   $sth->execute();
 }
 
-function create_entry( $data ){
+function create_entry($data)
+{
   global $pdo;
 
   $query = "INSERT INTO entries (category_id, user_id, title, content, post_date) VALUES (:category, :user, :title, :content, curdate())";
@@ -189,7 +208,7 @@ function create_entry( $data ){
   $sth->bindValue(':title', $data['title']);
   $sth->bindValue(':content', $data['content']);
   $sth->execute();
-  
+
 }
 
 ############# Set
@@ -222,6 +241,43 @@ function login_user($data)
   } catch (\Throwable $e) {
 
     print_r($e);
+  }
+}
+
+############# Update
+
+function update_user($data)
+{
+  global $pdo;
+
+  $params = "";
+  $count = 0;
+
+  foreach ($data['values'] as $key => $value) {
+    $count += 1;
+
+    $params .= "$key = :$key";
+
+    if ($count < count($data['values'])) {
+      $params .= ", ";
+    }
+  }
+
+  $params = trim($params);
+  $query = "UPDATE users SET $params WHERE id = $data[id]";
+  $sth = $pdo->prepare($query);
+
+  foreach ($data['values'] as $key => $value) {
+    $sth->bindParam(":$key", $data['values'][$key]);
+  }
+
+  try {
+    $sth->execute();
+    return true;
+
+  } catch (\Throwable $e) {
+
+    return false;
   }
 }
 
