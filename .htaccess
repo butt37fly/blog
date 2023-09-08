@@ -13,3 +13,4 @@ RewriteRule ^c/entry/$ src/controllers/entries.controller.php
 
 RewriteRule ^([a-zA-Z]+)/$ index.php?page=$1
 RewriteRule ^category/([a-zA-Z-]+)/$ index.php?page=category&category=$1
+RewriteRule ^entry/([a-zA-Z-]+)/$ index.php?page=entry&entry=$1

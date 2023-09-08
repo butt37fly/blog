@@ -6,7 +6,7 @@
     <article class="Entry">
       <div class="Entry__wrapper">
         <section class="Entry__header">
-          <a class="Entry__link Link" href="#">
+          <a class="Entry__link Link" href="<?php echo SITE_URI . "entry/$entry->entry_slug/"?>">
             <h2 class="Entry__title Subtitle">
               <?php echo $entry->title ?>
             </h2>
@@ -18,21 +18,17 @@
           </p>
         </section>
         <section class="Entry__bottom">
-          <a class="Entry__link Link Link--dark" href="<?php echo SITE_URI . "category/$entry->slug/" ?>">
+          <a class="Entry__link Link Link--dark" href="<?php echo SITE_URI . "category/$entry->cat_slug/" ?>">
             <h3 class="Entry__category Meta" rel="author">
               <?php echo $entry->category ?>
             </h3>
           </a>
-          <a class="Entry__link Link Link--dark" href="#">
-            <h3 class="Entry__author Meta" rel="author">
-              <?php echo $entry->author ?>
-            </h3>
-          </a>
-          <a class="Entry__link Link Link--dark" href="#">
-            <time class="Entry_date Meta">
-              <?php echo $entry->date ?>
-            </time>
-          </a>
+          <h3 class="Entry__author Meta" rel="author">
+            <?php echo $entry->author ?>
+          </h3>
+          <time class="Entry_date Meta">
+            <?php echo $entry->date ?>
+          </time>
         </section>
       </div>
     </article>

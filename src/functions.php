@@ -138,24 +138,33 @@ function get_categories()
   return $result;
 }
 
-function get_entries($limit = null, $category = null)
+function get_entries($limit = null, $category = null, $entry = null )
 {
   global $pdo;
 
-  $query = "SELECT c.name as 'category', c.slug as 'slug', u.username as 'author', e.title, e.content, e.post_date as 'date'
+  $query = "SELECT c.name as 'category', c.slug as 'cat_slug', e.slug as 'entry_slug', u.username as 'author', e.title, e.content, e.post_date as 'date'
   FROM entries e
   INNER JOIN categories c
   ON c.id = e.category_id
   INNER JOIN users u
   ON u.id = e.user_id";
 
-  if ($category != null && !empty($category))
-    $query .= " WHERE c.slug = '$category'";
+  if ( $entry != null && !empty($entry) ){
 
-  $query .= " ORDER BY e.post_date DESC";
+    $query .= " WHERE e.slug = '$entry'";
 
-  if ($limit != null && $limit > 0)
-    $query .= " LIMIT $limit";
+  } else {
+
+    if ($category != null && !empty($category))
+      $query .= " WHERE c.slug = '$category'";
+  
+    $query .= " ORDER BY e.post_date DESC";
+  
+    if ($limit != null && $limit > 0)
+      $query .= " LIMIT $limit";
+
+  }
+
 
   $sth = $pdo->prepare($query);
   $sth->execute();
@@ -205,11 +214,12 @@ function create_entry($data)
 {
   global $pdo;
 
-  $query = "INSERT INTO entries (category_id, user_id, title, content, post_date) VALUES (:category, :user, :title, :content, curdate())";
+  $query = "INSERT INTO entries (category_id, user_id, title, slug, content, post_date) VALUES (:category, :user, :title, :slug, :content, curdate())";
   $sth = $pdo->prepare($query);
   $sth->bindValue(':category', $data['category_id']);
   $sth->bindValue(':user', $data['user_id']);
   $sth->bindValue(':title', $data['title']);
+  $sth->bindValue(':slug', $data['slug']);
   $sth->bindValue(':content', $data['content']);
   $sth->execute();
 

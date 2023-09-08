@@ -8,6 +8,7 @@ custom_session_start();
 if( isset( $_POST['CreateEntry'] )){
 
   $title = trim($_POST['EntryTitle']);
+  $slug = create_slug( $title );
   $content = trim($_POST['EntryContent']);
   $user_id = $_SESSION['user']['id'];
   $category = $_POST['EntryCategory'];
@@ -47,6 +48,7 @@ if( isset( $_POST['CreateEntry'] )){
       'category_id' => $category,
       'user_id' => $user_id,
       'title' => $title,
+      'slug' => $slug,
       'content' => $content
     ]);
     server_says( 'custom', "La entrada $title ha sido creada correctamente." );

@@ -31,6 +31,7 @@ CREATE TABLE entries (
   category_id int NOT NULL,
   user_id int NOT NULL,
   title varchar(250) NOT NULL,
+  slug varchar(250) NOT NULL,
   content MEDIUMTEXT NOT NULL,
   post_date date NOT NULL,
   PRIMARY KEY(id),
@@ -48,9 +49,9 @@ INSERT INTO categories (name, slug) VALUES
 INSERT INTO users (username, email, password, reg_date) VALUES
 ( 'butt37fly', 'admin@myblog.com', '$2y$10$KlkWJX5B/Gj4i0BKOry4eeZfSPZc0/NmQf9nwHcqKIRJHUALxjocK', curdate() );
 
-INSERT INTO entries (category_id, user_id, title, content, post_date) VALUES
-(1, 1, 'Mi primer entrada', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ducimus necessitatibus iste ab porro, rem, pariatur, facere similique ipsa animi rerum magnam dicta consequatur architecto maxime nobis dignissimos voluptatum. Eaque!', '2023-09-02' ),
-(2, 1, 'Mi segunda entrada', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ducimus necessitatibus iste ab porro, rem, pariatur, facere similique ipsa animi rerum magnam dicta consequatur architecto maxime nobis dignissimos voluptatum. Eaque!', '2023-09-02' ),
-(3, 1, 'Mi tercera entrada', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ducimus necessitatibus iste ab porro, rem, pariatur, facere similique ipsa animi rerum magnam dicta consequatur architecto maxime nobis dignissimos voluptatum. Eaque!', '2023-09-03' ),
-(1, 1, 'Mi cuarta entrada', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ducimus necessitatibus iste ab porro, rem, pariatur, facere similique ipsa animi rerum magnam dicta consequatur architecto maxime nobis dignissimos voluptatum. Eaque!', '2023-09-03' ),
-(2, 1, 'Mi quinta entrada', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ducimus necessitatibus iste ab porro, rem, pariatur, facere similique ipsa animi rerum magnam dicta consequatur architecto maxime nobis dignissimos voluptatum. Eaque!', curdate() );
+INSERT INTO entries (category_id, user_id, title, slug, content, post_date) VALUES
+(1, 1, 'Mi primer entrada', 'mi-primer-entrada', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ducimus necessitatibus iste ab porro, rem, pariatur, facere similique ipsa animi rerum magnam dicta consequatur architecto maxime nobis dignissimos voluptatum. Eaque!', '2023-09-02' ),
+(2, 1, 'Mi segunda entrada', 'mi-segunda-entrada', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ducimus necessitatibus iste ab porro, rem, pariatur, facere similique ipsa animi rerum magnam dicta consequatur architecto maxime nobis dignissimos voluptatum. Eaque!', '2023-09-02' ),
+(3, 1, 'Mi tercera entrada', 'mi-tercera-entrada', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ducimus necessitatibus iste ab porro, rem, pariatur, facere similique ipsa animi rerum magnam dicta consequatur architecto maxime nobis dignissimos voluptatum. Eaque!', '2023-09-03' ),
+(1, 1, 'Mi cuarta entrada', 'mi-cuarta-entrada', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ducimus necessitatibus iste ab porro, rem, pariatur, facere similique ipsa animi rerum magnam dicta consequatur architecto maxime nobis dignissimos voluptatum. Eaque!', '2023-09-03' ),
+(2, 1, 'Mi quinta entrada', 'mi-quinta-entrada', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ducimus necessitatibus iste ab porro, rem, pariatur, facere similique ipsa animi rerum magnam dicta consequatur architecto maxime nobis dignissimos voluptatum. Eaque!', curdate() );

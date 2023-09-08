@@ -217,7 +217,7 @@ p {
   padding: var(--s-xs);
 }
 
-/*** Entry ***/
+/*** Searchbar ***/
 
 .Searchbar {
   width: auto;
@@ -379,6 +379,43 @@ p {
   width: 100%;
   margin: unset;
 }
+
+/*** Post ***/
+
+.Post{
+  width: auto;
+  height: auto;
+  margin: auto;
+}
+
+.Post__wrapper{
+  padding: var(--s-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-s);
+}
+
+.Post__header{
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-xs);
+  padding-bottom: var(--s-xs);
+  border-bottom: 2px solid var(--c-black);
+}
+
+.Post__meta{
+  display: flex;
+  gap: var(--s-xs);
+}
+
+.Post__data{
+  position: relative;
+}
+
+.Post__data:after{
+  content: '|';
+}
+
 
 /*************************** PARTS ***************************/
 
