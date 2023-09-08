@@ -157,8 +157,6 @@ function get_entries($limit = null, $category = null)
   if ($limit != null && $limit > 0)
     $query .= " LIMIT $limit";
 
-  var_dump($query);
-
   $sth = $pdo->prepare($query);
   $sth->execute();
   $result = $sth->fetchAll();
