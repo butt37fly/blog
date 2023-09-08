@@ -1,4 +1,4 @@
 <?php
 
-$entries = get_entries(3);
+$entries = get_entries();
 include 'inc/templates/parts/feed.php';

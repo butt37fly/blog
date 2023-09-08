@@ -186,6 +186,9 @@ p {
   width: auto;
   height: auto;
   flex: 1 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Entry__wrapper {
