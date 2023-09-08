@@ -45,11 +45,16 @@ function validate_input($input, $type)
 
 }
 
-function exist_term($input, $term, $table)
+function exist_term($input, $term, $table, $where = null)
 {
   global $pdo;
 
   $query = "SELECT $term FROM $table WHERE $term = :input";
+
+  if ( $where !== null ){
+    $query .= " AND id = $where";
+  }
+
   $sth = $pdo->prepare($query);
   $sth->bindValue(':input', $input);
   $sth->execute();
@@ -145,7 +150,7 @@ function get_categories()
   return $result;
 }
 
-function get_entries($limit = null, $category = null, $entry = null )
+function get_entries($limit = null, $category = null, $identifier = null )
 {
   global $pdo;
 
@@ -156,9 +161,9 @@ function get_entries($limit = null, $category = null, $entry = null )
   INNER JOIN users u
   ON u.id = e.user_id";
 
-  if ( $entry != null && !empty($entry) ){
+  if ( $identifier != null && !empty($identifier) ){
 
-    $query .= " WHERE e.slug = '$entry'";
+    $query .= " WHERE e.slug = '$identifier' or e.id = '$identifier' ";
 
   } else {
 
@@ -300,6 +305,34 @@ function update_user($data)
 
     return false;
   }
+}
+
+function update_entry($data)
+{
+  global $pdo;
+
+  $params = "";
+  $count = 0;
+
+  foreach ($data['values'] as $key => $value) {
+    $count += 1;
+
+    $params .= "$key = :$key";
+
+    if ($count < count($data['values'])) {
+      $params .= ", ";
+    }
+  }
+
+  $params = trim($params);
+  $query = "UPDATE entries SET $params WHERE id = $data[id]";
+  $sth = $pdo->prepare($query);
+
+  foreach ($data['values'] as $key => $value) {
+    $sth->bindParam(":$key", $data['values'][$key]);
+  }
+
+  $sth->execute();
 }
 
 ############# Delete

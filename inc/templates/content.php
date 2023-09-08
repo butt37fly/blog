@@ -41,7 +41,15 @@
 
     if ($_GET['page'] === "entries") {
 
-      include 'inc/pages/admin/entries.php';
+      if (isset( $_GET['id'])) {
+        
+        include 'inc/pages/admin/entries-update.php';
+
+      } else {
+
+        include 'inc/pages/admin/entries.php';
+      
+      }
 
     }
 
