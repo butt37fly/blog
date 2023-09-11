@@ -28,7 +28,7 @@ if ( isset( $_POST['CreateCategory'] ) ){
   try {
     create_category( ['name' => $name, 'slug' => $slug] );
     server_says( 'custom', 'La categoría se ha creado exitosamente' );
-  } catch (\Throwable $th) {
+  } catch (\Throwable $e) {
     server_says( 'e000' );
   }
 

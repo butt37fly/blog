@@ -12,7 +12,7 @@ if (isset($_GET['a']) && $_GET['a'] === "delete") {
     try {
       delete_entry($_GET['id']);
       server_says('custom', 'La entrada se ha eliminado exitosamente.');
-    } catch (\Throwable $th) {
+    } catch (\Throwable $e) {
       server_says('e000');
     }
 
@@ -68,7 +68,7 @@ if (isset($_POST['CreateEntry'])) {
       'content' => $content
     ]);
     server_says('custom', "La entrada <b>$title</b> ha sido creada correctamente.");
-  } catch (\Throwable) {
+  } catch (\Throwable $e) {
     server_says('e000');
   }
 
